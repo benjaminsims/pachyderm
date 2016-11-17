@@ -589,8 +589,7 @@ func getJobID(req *ppsclient.CreateJobRequest) string {
 	// will have the sam job IDs, therefore won't be created in the database
 	// twice.
 	if req.Pipeline != nil && len(req.Inputs) > 0 && !req.Force {
-		s := req.Pipeline.Name
-		s += req.PipelineVersion.String()
+		s := fmt.Sprintf("%s%d", req.Pipeline.Name, req.PipelineVersion)
 		s += req.Transform.String()
 		for _, input := range req.Inputs {
 			s += "/" + input.String()
